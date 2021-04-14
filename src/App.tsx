@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import PlayBar from "./view/PlayBar";
+import SideMenu from "./view/SideMenu";
+import ViewManager from "./view/ViewManager";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppProps {
+
+}
+
+interface AppState {
+
+}
+
+class App extends Component<AppProps, AppState> {
+
+    private readonly refToPlayBar : React.RefObject<PlayBar>;
+    private readonly refToViewManager : React.RefObject<ViewManager>;
+
+    public constructor(props : AppProps) {
+        super(props);
+
+        this.refToViewManager = React.createRef();
+        this.refToPlayBar = React.createRef();
+    }
+
+    public getPlayBar() : PlayBar | null
+    {
+        return this.refToPlayBar.current;
+    }
+
+    public getViewManager() : ViewManager | null
+    {
+        return this.refToViewManager.current;
+    }
+
+    public render() {
+        return (
+            <div>
+                <SideMenu app={this}/>
+                <ViewManager ref={this.refToViewManager} app={this}/>
+                <PlayBar ref={this.refToPlayBar} />
+            </div>
+        );
+    }
+
 }
 
 export default App;
